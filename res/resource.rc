@@ -1,0 +1,89 @@
+// 
+// 本软件为免费、开源软件。
+// 本软件的版权(包括源码及二进制发布版本)归一切公众所有。
+// 您可以自由使用、传播本软件。
+// 您也可以以任何形式、任何目的使用本软件(包括源码及二进制发布版本)，而不受任何版权限制。
+// =====================
+// 作者: 孙明保
+// 邮箱: sunmingbao@126.com
+// 
+
+#include "res.h"
+#include <windows.h>
+
+// note that the icon used by the Explorer (i.e. the programs icon) is the
+// first icon in the executable and the icons are sorted both by their order
+// (Win9x) and by alphabetically (!) (NT), so put this icon first and give it
+// a name starting with "a"
+
+a_exe_icon    ICON "sample.ico"
+my_frame_icon ICON "sample.ico"
+
+icon_1     ICON "start_32.ico"
+icon_2     ICON "stop_32.ico"
+icon_3     ICON "eye_32.ico"
+icon_3_dis ICON "eye_32_dis.ico"
+
+my_cursor  CURSOR "DockVert.cur"
+
+
+// Menu
+MY_MENU MENU DISCARDABLE 
+BEGIN
+    	POPUP "文件(&F)"
+    	BEGIN
+    	        MENUITEM "新建(&N)\tCtrl+N", 		 IDM_FILE_NEW
+    	        MENUITEM "打开(&O)...\tCtrl+O", 	 IDM_FILE_OPEN
+    	        MENUITEM "保存(&S)\tCtrl+S", 		 IDM_FILE_SAVE
+    	        MENUITEM "另存为(&A)...", 			 IDM_FILE_SAVE_AS
+        		MENUITEM SEPARATOR
+    	        MENUITEM "最近打开的文件(暂未实现)", IDM_RECENT_FILES, GRAYED
+        		MENUITEM SEPARATOR
+        		MENUITEM "退出(&X)", 				 IDM_APP_EXIT
+    	END
+
+    	POPUP "查看(&V)"
+    	BEGIN
+    	        MENUITEM "工具栏(&T)", 				IDM_APP_TOOLBAR_WIN, CHECKED
+        		MENUITEM "状态栏(&S)", 				IDM_APP_STATUSBAR_WIN, CHECKED
+    	END
+
+    	POPUP "帮助(&H)"
+    	BEGIN
+        	    MENUITEM "获取新版本...",	    IDM_GET_NEW_VERSION
+        	    MENUITEM "获取源代码...",	    IDM_GET_SOURCE
+        	    MENUITEM "访问官方站点...",	    IDM_OPEN_OFFICIAL_SITE
+        	    MENUITEM SEPARATOR
+        	    MENUITEM "关于本软件...(&A)",	IDM_APP_ABOUT
+    	END
+END
+
+
+// Accelerator
+MY_ACCELER ACCELERATORS DISCARDABLE 
+BEGIN
+    	"^N",         IDM_FILE_NEW,          ASCII,  NOINVERT
+    	"^O",         IDM_FILE_OPEN,         ASCII,  NOINVERT
+    	"^S",         IDM_FILE_SAVE,         ASCII,  NOINVERT
+END
+
+
+// Dialog
+ABOUTBOX DIALOG DISCARDABLE  32, 32, 250, 200
+STYLE DS_MODALFRAME | WS_POPUP
+FONT 8, "MS Sans Serif"
+BEGIN
+    	ICON        "my_frame_icon",IDC_STATIC,10,10,32,32, SS_REALSIZEIMAGE
+    	PUSHBUTTON  "源码", ID_AB_SOURCE,5, 50, 35, 14
+    	PUSHBUTTON  "官网", ID_AB_SITE,  5, 70, 35, 14
+    	PUSHBUTTON  "升级", ID_AB_UPDATE,5, 90, 35, 14
+    	CONTROL "", ID_ABOUT_INFO, "edit"
+    	, WS_BORDER|WS_VSCROLL | ES_MULTILINE|ES_AUTOVSCROLL|ES_WANTRETURN|ES_READONLY
+    	, 45, 10, 190, 160
+
+    	//CTEXT       "About Box Demo Program",IDC_STATIC,7,40,166,8
+    	//CTEXT       "(c) Charles Petzold, 1998",IDC_STATIC,7,52,166,8
+    	DEFPUSHBUTTON   "确定",IDOK,100,180,50,14
+END
+
+
