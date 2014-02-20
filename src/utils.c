@@ -287,10 +287,8 @@ void center_child_win(HWND hwndParent, HWND hwndWindow)
  
          MoveWindow(hwndWindow, nX, nY, nWidth, nHeight, FALSE);
  
-         return TRUE;
      }
  
-     return FALSE;
 }
 
 
