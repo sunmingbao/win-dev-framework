@@ -9,6 +9,7 @@
  */
 #include <windows.h>
 #include "common.h"
+#include "utils.h"
 #include "global_symbols.h"
 
 HWND    hwnd_statusbar;
@@ -44,7 +45,7 @@ int CreateStatusBar()
     statusbar_height = win_height(hwnd_statusbar);
     SendMessage(hwnd_statusbar, SB_SETPARTS, (WPARAM)ARRAY_SIZE(fields_width), (LPARAM)fields_width);
     update_statusbar();
-    add_tip(hwndTip, hwnd_toolbar, TEXT("hello, I am the statusbar."));
+    add_tip(hwndTip, hwnd_statusbar, TEXT("hello. ÕâÊÇ×´Ì¬À¸"));
 
 }
 

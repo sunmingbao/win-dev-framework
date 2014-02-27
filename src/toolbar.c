@@ -9,6 +9,7 @@
  */
 #include <windows.h>
 #include "common.h"
+#include "utils.h"
 #include "global_symbols.h"
 #include "res.h"
 
@@ -78,7 +79,7 @@ HICON hiconItem;
 
     if(hwnd_toolbar == NULL)
     {
-        err_info_box(NULL, TEXT ("CreateToolbar failed!")) ;
+        err_info_box(NULL, TEXT("创建工具栏失败"));
         return FAIL;
      }
     
@@ -139,7 +140,7 @@ HICON hiconItem;
                                      	GWL_WNDPROC, (LONG) my_tb_proc) ;
     }
 
-    add_tip(hwndTip, hwnd_toolbar, TEXT("hello, I am the toolbar."));
+    add_tip(hwndTip, hwnd_toolbar, TEXT("hello. 这是工具栏"));
     return SUCCESS;
 }
 

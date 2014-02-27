@@ -11,6 +11,7 @@
 #include <windows.h>
 #include "app_property.h"
 #include "common.h"
+#include "utils.h"
 #include "global_symbols.h"
 
 #include "res.h"

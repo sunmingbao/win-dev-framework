@@ -21,7 +21,6 @@ TCHAR   szFrameWinClassName[] = TEXT ("frame_win") ;
 HWND    hwnd_frame;
 
 HWND hwndTip;
-int  doc_modified;
 
 int display_toolbar=1;
 int display_statusbar=1;
@@ -42,16 +41,6 @@ void set_frame_title(TCHAR *file_name)
     sprintf(info, TEXT("%s - %s"), szAppName, file_name);
     SetWindowText(hwnd_frame, info);
 
-}
-
-void save_doc_file(TCHAR *file_name)
-{
-    ;
-}
-
-void load_doc_file(TCHAR *file_name)
-{
-    ;
 }
 
 
@@ -82,8 +71,6 @@ LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
     POINT point;
     RECT		rect ;
     int  item_id;
-    int left_win_y=toolbar_height;
-    int left_win_x=we_pos;
     
     int ret;
 
@@ -92,10 +79,6 @@ LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
         case WM_CREATE:
             hwnd_frame = hwnd;
             
-            CreateToolbar();
-
-            CreateStatusBar();
-
             hwndTip =CreateWindowEx(NULL, TOOLTIPS_CLASS, NULL,
                         WS_POPUP | TTS_NOPREFIX | TTS_ALWAYSTIP |TTS_BALLOON,
                         CW_USEDEFAULT,CW_USEDEFAULT,CW_USEDEFAULT,CW_USEDEFAULT,
@@ -103,6 +86,10 @@ LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
                         NULL,
                         g_hInstance, 
                         NULL);
+            
+            CreateToolbar();
+
+            CreateStatusBar();
 
             return 0 ;
 
