@@ -16,6 +16,7 @@
 
     本软件是一款开源、免费软件。
     具体版权说明见COPYING.txt。
+    本软件的下载地址：https://sourceforge.net/projects/windevframework/files/v1.x/
 
     本软件的编译方法见Build.txt。
 

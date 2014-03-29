@@ -169,7 +169,7 @@ LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 
                 case    IDM_GET_SOURCE:
                 ShellExecute(NULL, "open"
-                    , "http://sourceforge.net/projects/xb-ether-tester/files/v2.x/"
+                    , "https://sourceforge.net/projects/windevframework/files/v1.x/"
                     , NULL, NULL, SW_SHOWNORMAL);
 
                	return 0 ;
