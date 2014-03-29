@@ -15,7 +15,7 @@
 
 #include "common.h"
 #include "utils.h"
-
+#include "file_open_history.h"
 
 TCHAR   szFrameWinClassName[] = TEXT ("frame_win") ;
 HWND    hwnd_frame;
@@ -27,6 +27,7 @@ int display_statusbar=1;
 
 int TOOLBAR_BUTTON3_DOWN;
 char doc_file_path[MAX_FILE_PATH_LEN];
+char file_to_open[MAX_FILE_PATH_LEN];
 
 void resize_window(HWND hwnd)
 {
@@ -61,6 +62,16 @@ int doc_save_proc()
     return 0;
 }
 
+void open_file()
+{
+    if (doc_save_proc()) return;
+
+    load_doc_file(file_to_open);;
+    strcpy(doc_file_path, file_to_open);
+    set_frame_title(strrchr(doc_file_path, '\\')+1);
+    update_statusbar();
+    update_file_open_history(doc_file_path);
+}
 
 LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -91,6 +102,14 @@ LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 
             CreateStatusBar();
 
+            DragAcceptFiles(hwnd, TRUE);
+
+    set_frame_title(TEXT("无标题"));
+
+            ret=get_last_doc_file(file_to_open);
+
+            if (0==ret) open_file();
+
             return 0 ;
 
 
@@ -109,6 +128,28 @@ LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
             //draw some thing here
             EndPaint (hwnd, &ps) ;
             return 0 ;
+
+        case WM_DROPFILES :
+            DragQueryFile((HDROP)wParam,
+                          0,
+                          file_to_open,
+                          sizeof(file_to_open));
+            DragFinish((HDROP)wParam);
+            open_file();
+            return 0;
+
+        case WM_INITMENU:
+
+            if (lParam == 0)
+            {
+                hMenu = GetMenu(hwnd);
+                hMenu = GetSubMenu(hMenu, 0);
+                hMenu = GetSubMenu(hMenu, 5);
+                populate_recent_files(hMenu);
+            }
+
+
+            return 0;
 
         case 	WM_COMMAND:
             hMenu = GetMenu (hwnd) ;
@@ -209,14 +250,13 @@ LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 
                 case    IDM_FILE_SAVE_AS:
                 {
-                        char file_name[MAX_FILE_PATH_LEN];
-                        ret=get_save_file_name(file_name, hwnd, DOC_FILE_FILTER, DOC_FILE_SUFFIX);
+                        ret=get_save_file_name(file_to_open, hwnd, DOC_FILE_FILTER, DOC_FILE_SUFFIX);
                         if (ret) return 0 ;
-                        strcpy(doc_file_path, file_name);
-                        set_frame_title(strrchr(doc_file_path, '\\')+1);
-                        save_doc_file(doc_file_path);
+                        save_doc_file(file_to_open);
+                        open_file();
                        	return 0 ;
                 }
+                
 
                 case    IDM_FILE_NEW:
                 {
@@ -229,17 +269,31 @@ LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
                 
                 case    IDM_FILE_OPEN:
                 {
-                    char file_name[MAX_FILE_PATH_LEN];
-                    if (doc_save_proc()) return 0;
-                    if (0==get_open_file_name(file_name, hwnd, DOC_FILE_FILTER))
-                    {
-                        load_doc_file(file_name);
-                        strcpy(doc_file_path, file_name);
-                        set_frame_title(strrchr(doc_file_path, '\\')+1);
-
-                    }
+                    if (get_open_file_name(file_to_open, hwnd, DOC_FILE_FILTER))
+                        return 0;
+                    open_file();
                    	return 0 ;
                 }
+
+                case    ID_FILE_RECENT_FILE_BEGIN+0:
+                case    ID_FILE_RECENT_FILE_BEGIN+1:
+                case    ID_FILE_RECENT_FILE_BEGIN+2:
+                case    ID_FILE_RECENT_FILE_BEGIN+3:
+                case    ID_FILE_RECENT_FILE_BEGIN+4:
+                case    ID_FILE_RECENT_FILE_BEGIN+5:
+                case    ID_FILE_RECENT_FILE_BEGIN+6:
+                case    ID_FILE_RECENT_FILE_BEGIN+7:
+                case    ID_FILE_RECENT_FILE_BEGIN+8:
+                case    ID_FILE_RECENT_FILE_BEGIN+9:
+                {
+                    get_file_path_by_idx(file_to_open
+                        , item_id - ID_FILE_RECENT_FILE_BEGIN);
+
+                    open_file();
+                    return 0 ;
+
+                }
+
 
             }
 
@@ -300,8 +354,6 @@ int create_windows(int iCmdShow)
     
     ShowWindow (hwnd_frame, SW_MAXIMIZE) ;
     UpdateWindow (hwnd_frame) ;
-    set_frame_title(TEXT("无标题"));
-
 
     return 0;
 

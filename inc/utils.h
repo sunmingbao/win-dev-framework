@@ -98,7 +98,8 @@ static inline void get_relative_pos_self(RECT *rect1, RECT *rect)
 }
 
 void center_child_win(HWND hparent, HWND hchild);
-
+int file_exists(char *file_path);
+void delete_file_f(char *file_path);
 int get_save_file_name(char *file_name, HWND hwnd, char *filter, char *ext);
 int get_open_file_name(char *file_name, HWND hwnd, char *filter_str);
 

@@ -41,6 +41,7 @@ extern int     statusbar_height;
 
 int CreateToolbar();
 int CreateStatusBar();
+void update_statusbar();
 int create_windows(int iCmdShow);
 
 void resize_window(HWND hwnd);

@@ -39,3 +39,7 @@
 #define  ID_AB_SITE             40502
 #define  ID_AB_UPDATE           40503
 
+#define ID_FILE_RECENT_FILE_BEGIN    40700
+#define MAX_RECENT_FILE_NUM     10
+
+

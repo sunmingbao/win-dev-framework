@@ -37,7 +37,10 @@ BEGIN
     	        MENUITEM "保存(&S)\tCtrl+S", 		 IDM_FILE_SAVE
     	        MENUITEM "另存为(&A)...", 			 IDM_FILE_SAVE_AS
         		MENUITEM SEPARATOR
-    	        MENUITEM "最近打开的文件(暂未实现)", IDM_RECENT_FILES, GRAYED
+        		POPUP "最近打开的文件"
+			BEGIN
+				MENUITEM "&1 abc", 	ID_FILE_RECENT_FILE_BEGIN
+			END
         		MENUITEM SEPARATOR
         		MENUITEM "退出(&X)", 				 IDM_APP_EXIT
     	END

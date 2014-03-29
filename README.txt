@@ -4,17 +4,44 @@
 ======================
 
     win-dev-framework是一个windows程序开发框架，基于C语言和mingw工具链。 
-    win-dev-framework包含了windows程序中最基本的代码，如WinMain函数函数、主窗口创建等初始化代码。
-    同时，win-dev-framework还包含了程序编译及打包的代码。
+    
+    win-dev-framework内含如下内容：
+        一份简单的源码目录结构
+        win32程序基础代码
+        一些常用例程
+        makefile编译脚本
+        NSIS打包脚本
+        
     用户可以以此为基础，快速开始自己的windows程序开发。
 
-    win-dev-framework是用纯C语言写成的。尽管如此，但是由于makefile中采用了g++编译器。
-    因此，本框架也可以支持使用C++来进行开发，包括引用、链接外部的C++库。
-    
     本软件是一款开源、免费软件。
     具体版权说明见COPYING.txt。
 
     本软件的编译方法见Build.txt。
+
+本软件的目录结构大致如下：
+
+|
+|-- makefile
+|
+|-- package.nsi
+|
+|-- inc
+|   |-- *.h
+|
+|-- src
+|   |-- *.c
+|
+|-- res
+|   |-- 资源文件
+
+
+各目录项的用途如下：
+inc         目录中存放.h文件。
+src         目录中存放.c文件。
+res         目录中存放资源文件。
+makefile    对源码进行编译。
+package.nsi 对程序进行打包，即生成安装包。
 
 ======================
 作者: 孙明保

@@ -50,7 +50,7 @@ int get_save_file_name(char *file_name, HWND hwnd, char *filter, char *ext)
 
     Ofn.lpstrFile= szFile; 
     Ofn.nMaxFile = MAX_FILE_PATH_LEN; 
-    Ofn.Flags = OFN_SHOWHELP | OFN_OVERWRITEPROMPT; 
+    Ofn.Flags = OFN_SHOWHELP | OFN_OVERWRITEPROMPT  | OFN_NOCHANGEDIR; 
     Ofn.lpstrTitle = "save to"; 
  
 
@@ -84,7 +84,7 @@ int get_open_file_name(char *file_name, HWND hwnd, char *filter_str)
     ofn.lpstrFileTitle = NULL;
     ofn.nMaxFileTitle = 0;
     ofn.lpstrInitialDir = NULL;
-    ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
+    ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST  | OFN_NOCHANGEDIR;
 
     // Display the Open dialog box. 
 
@@ -96,6 +96,25 @@ int get_open_file_name(char *file_name, HWND hwnd, char *filter_str)
     
     return 1;
 
+}
+
+int file_exists(char *file_path)
+{
+    FILE *file=fopen(file_path, "r");
+    if (NULL!=file)
+    {
+        fclose(file);
+        return 1;
+    }
+
+    return 0;
+
+}
+
+void delete_file_f(char *file_path)
+{
+    SetFileAttributes(file_path,FILE_ATTRIBUTE_NORMAL);
+    DeleteFile(file_path);
 }
 
 void center_child_win(HWND hwndParent, HWND hwndWindow)

@@ -10,7 +10,7 @@
 
 BUILD_TIME:=$(shell echo %date:~0,10%) $(shell echo %time:~0,8%)
 
-CC := g++
+CC := gcc
 
 CFLAG := -Wall -O2  -DBUILD_TIME='"$(BUILD_TIME)"' -D_WIN32_IE=0x0501 -D_WIN32_WINNT=0x0502 -DWINVER=0x0501 
 
