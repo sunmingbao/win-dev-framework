@@ -16,6 +16,8 @@
 #include "common.h"
 #include "utils.h"
 #include "file_open_history.h"
+#include "ext_utils_textout.h"
+#include "ext_utils_av.h"
 
 TCHAR   szFrameWinClassName[] = TEXT ("frame_win") ;
 HWND    hwnd_frame;
@@ -110,6 +112,8 @@ LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 
             if (0==ret) open_file();
 
+            av_test();
+
             return 0 ;
 
 
@@ -126,6 +130,7 @@ LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
         case WM_PAINT :
             hdc = BeginPaint (hwnd, &ps) ;
             //draw some thing here
+            text_out_test(hdc);
             EndPaint (hwnd, &ps) ;
             return 0 ;
 
