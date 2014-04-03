@@ -338,10 +338,10 @@ int register_frame()
     wndclass.cbClsExtra = 0;
     wndclass.cbWndExtra = 0;
     wndclass.hInstance  = g_hInstance;
-    wndclass.hIcon      = LoadIcon (g_hInstance, TEXT("my_frame_icon"));
+    wndclass.hIcon      = LoadIcon (g_hInstance, TEXT("app_icon"));
 #if 0
     /* 如果想换光标，就用如下代码 */
-    wndclass.hCursor    = LoadCursor (g_hInstance, TEXT("my_cursor"));
+    wndclass.hCursor    = LoadCursor (g_hInstance, TEXT("main_window_cursor"));
 #else
     wndclass.hCursor      = LoadCursor (NULL, IDC_ARROW);
 #endif

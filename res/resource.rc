@@ -16,15 +16,14 @@
 // (Win9x) and by alphabetically (!) (NT), so put this icon first and give it
 // a name starting with "a"
 
-a_exe_icon    ICON "sample.ico"
-my_frame_icon ICON "sample.ico"
+a_exe_icon    ICON "app_icon.ico"
+app_icon ICON "app_icon.ico"
 
-icon_1     ICON "start_32.ico"
-icon_2     ICON "stop_32.ico"
-icon_3     ICON "eye_32.ico"
-icon_3_dis ICON "eye_32_dis.ico"
+tb_icon_1     ICON "tb_icon_1.ico"
+tb_icon_2     ICON "tb_icon_2.ico"
+tb_icon_3     ICON "tb_icon_3.ico"
 
-my_cursor  CURSOR "DockVert.cur"
+main_window_cursor  CURSOR "DockVert.cur"
 
 
 // Menu
@@ -76,7 +75,7 @@ ABOUTBOX DIALOG DISCARDABLE  32, 32, 250, 200
 STYLE DS_MODALFRAME | WS_POPUP
 FONT 8, "MS Sans Serif"
 BEGIN
-    	ICON        "my_frame_icon",IDC_STATIC,10,10,32,32, SS_REALSIZEIMAGE
+    	ICON        "app_icon",IDC_STATIC,10,10,32,32, SS_REALSIZEIMAGE
     	PUSHBUTTON  "Ô´Âë", ID_AB_SOURCE,5, 50, 35, 14
     	PUSHBUTTON  "¹ÙÍø", ID_AB_SITE,  5, 70, 35, 14
     	PUSHBUTTON  "Éý¼¶", ID_AB_UPDATE,5, 90, 35, 14

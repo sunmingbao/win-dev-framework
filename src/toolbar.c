@@ -86,16 +86,16 @@ HICON hiconItem;
 //º”‘ÿ∞¥≈¶Õº±Í
     h0 = ImageList_Create(32,32,ILC_MASK|ILC_COLORDDB,4,0);
 
-    hiconItem = LoadIcon(g_hInstance, TEXT("icon_1"));
+    hiconItem = LoadIcon(g_hInstance, TEXT("tb_icon_1"));
     ImageList_AddIcon(h0, hiconItem);
     DestroyIcon(hiconItem);
     
-    hiconItem = LoadIcon(g_hInstance, TEXT("icon_2"));
+    hiconItem = LoadIcon(g_hInstance, TEXT("tb_icon_2"));
     ImageList_AddIcon(h0, hiconItem);
     DestroyIcon(hiconItem);
     
 
-    hiconItem = LoadIcon(g_hInstance, TEXT("icon_3"));
+    hiconItem = LoadIcon(g_hInstance, TEXT("tb_icon_3"));
     ImageList_AddIcon(h0, hiconItem);
     DestroyIcon(hiconItem);
 
@@ -104,16 +104,16 @@ HICON hiconItem;
 
     h1 = ImageList_Create(32,32,ILC_COLORDDB,4,0);
 
-    hiconItem = LoadIcon(g_hInstance, TEXT("icon_1"));
+    hiconItem = LoadIcon(g_hInstance, TEXT("tb_icon_1"));
     ImageList_AddIcon(h1, hiconItem);
     DestroyIcon(hiconItem);
     
-    hiconItem = LoadIcon(g_hInstance, TEXT("icon_2"));
+    hiconItem = LoadIcon(g_hInstance, TEXT("tb_icon_2"));
     ImageList_AddIcon(h1, hiconItem);
     DestroyIcon(hiconItem);
     
 
-    hiconItem = LoadIcon(g_hInstance, TEXT("icon_3_dis"));
+    hiconItem = LoadIcon(g_hInstance, TEXT("tb_icon_3"));
     ImageList_AddIcon(h1, hiconItem);
     DestroyIcon(hiconItem);
 
