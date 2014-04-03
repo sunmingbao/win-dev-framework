@@ -128,11 +128,25 @@ LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 
         case WM_PAINT :
+        {
+            int cxchar = fw_text_get_char_width(100);
             hdc = BeginPaint (hwnd, &ps) ;
             //draw some thing here
-            text_out_test(hdc);
+            fw_text_out_full_trans(hdc
+            , 50, 100, 100, RGB(0xee,0x3d,0x11)
+            , TEXT("Hello"), 5);
+
+            fw_text_out_full(hdc
+            , 100, 200, 100, RGB(0xff,0xff,0xff), RGB(0x0,0x0,0xff)
+            , TEXT("ZTE"), 3);
+
+            fw_text_out_full(hdc
+            , 100+3*cxchar, 200, 100, RGB(0xff,0xff,0xff), RGB(0x0,0x0,0x0)
+            , TEXT("ÖÐÐË"), 4);
+                        
             EndPaint (hwnd, &ps) ;
             return 0 ;
+        }
 
         case WM_DROPFILES :
             DragQueryFile((HDROP)wParam,
@@ -294,7 +308,7 @@ LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
                     get_file_path_by_idx(file_to_open
                         , item_id - ID_FILE_RECENT_FILE_BEGIN);
 
-                    open_file();
+                    if (file_exists(file_to_open)) open_file();
                     return 0 ;
 
                 }

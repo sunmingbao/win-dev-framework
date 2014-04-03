@@ -111,10 +111,10 @@ int file_exists(char *file_path)
 
 }
 
-void delete_file_f(char *file_path)
+int delete_file_f(char *file_path)
 {
     SetFileAttributes(file_path,FILE_ATTRIBUTE_NORMAL);
-    DeleteFile(file_path);
+    return DeleteFile(file_path);
 }
 
 void center_child_win(HWND hwndParent, HWND hwndWindow)

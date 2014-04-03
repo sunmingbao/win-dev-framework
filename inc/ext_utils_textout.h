@@ -15,10 +15,13 @@
 #include <tchar.h> 
 #include <windowsx.h>
 
-void text_out_full(HDC hdc, int x, int y, int size
+void fw_text_out_full(HDC hdc, int x, int y, int height
     ,COLORREF bg, COLORREF fg, TCHAR *text, int len);
 
-void text_out_test(HDC hdc);
+void fw_text_out_full_trans(HDC hdc, int x, int y, int height
+    ,COLORREF fg, TCHAR *text, int len);
+
+int fw_text_get_char_width(int height);
 
 #endif
 

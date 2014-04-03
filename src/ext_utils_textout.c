@@ -15,17 +15,76 @@
 
 #include "ext_utils_textout.h"
 
-void text_out_full(HDC hdc, int x, int y, int size
+void fw_text_out_full(HDC hdc, int x, int y, int height
     ,COLORREF bg, COLORREF fg, TCHAR *text, int len)
 {
-    SetBkColor (hdc, bg) ;
+    HFONT  h_old_font;
+    LOGFONT lf ;
+    
+    memset(&lf, 0, sizeof(lf));
+    lf.lfCharSet = 1;
+
+    lf.lfHeight = height;
+    lf.lfPitchAndFamily = FIXED_PITCH;
+    lf.lfWeight  = FW_BLACK;
+
+    
+    h_old_font = SelectObject (hdc, CreateFontIndirect(&lf)) ;
+
+    SetBkMode(hdc, OPAQUE);
+    SetBkColor(hdc, bg) ;
     SetTextColor(hdc, fg) ;
     TextOut(hdc, x, y, text, len) ; 
+
+    DeleteObject(SelectObject(hdc, h_old_font)) ;
 }
 
-void text_out_test(HDC hdc)
+void fw_text_out_full_trans(HDC hdc, int x, int y, int height
+    ,COLORREF fg, TCHAR *text, int len)
 {
-    text_out_full(hdc, 200, 200, 30
-    ,RGB(0x00,0x00,0x00), RGB(0xFF,0xFF,0xFF), TEXT("hello"), 5);
+    HFONT  h_old_font;
+    LOGFONT lf ;
+    
+    memset(&lf, 0, sizeof(lf));
+    lf.lfCharSet = 1;
+
+    lf.lfHeight = height;
+    lf.lfPitchAndFamily = FIXED_PITCH;
+    lf.lfWeight  = FW_BLACK;
+
+    
+    h_old_font = SelectObject(hdc, CreateFontIndirect(&lf)) ;
+
+    SetBkMode(hdc, TRANSPARENT);
+    SetTextColor(hdc, fg) ;
+    TextOut(hdc, x, y, text, len) ; 
+
+    DeleteObject(SelectObject(hdc, h_old_font)) ;
 }
+
+int fw_text_get_char_width(int height)
+{
+    HFONT  h_old_font;
+    LOGFONT lf ;
+    HDC hdc = CreateIC(TEXT ("DISPLAY"), NULL, NULL, NULL) ;
+    TEXTMETRIC textmetric;
+    
+    memset(&lf, 0, sizeof(lf));
+    lf.lfCharSet = 1;
+
+    lf.lfHeight = height;
+    lf.lfPitchAndFamily = FIXED_PITCH;
+    lf.lfWeight  = FW_BLACK;
+
+
+    
+    h_old_font = SelectObject (hdc, CreateFontIndirect(&lf)) ;
+    GetTextMetrics(hdc, &textmetric) ;
+    DeleteObject(SelectObject(hdc, h_old_font)) ;
+    DeleteDC(hdc) ;
+
+    return textmetric.tmAveCharWidth ;
+
+}
+
 
