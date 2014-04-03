@@ -15,7 +15,7 @@
 
 //用户修改-begin --->
 #define    APP_NAME       "windows程序开发框架"
-#define    APP_VERSION    {'1','0','1','0'}
+#define    APP_VERSION    {'1','0','2','0'}
 
 #define    szAuthor    TEXT("孙明保")
 #define    szCompany   TEXT("ZTE中兴")

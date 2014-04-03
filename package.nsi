@@ -14,7 +14,7 @@
 !define PRODUCT_NAME "windows程序开发框架"
 !define PRODUCT_NAME_EN "win-dev-framework"
 !define MAIN_PROG_NAME "win-dev-framework.exe"
-!define PRODUCT_VERSION "1.0.1"
+!define PRODUCT_VERSION "1.0.2"
 !define PRODUCT_PUBLISHER "孙明保"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\${MAIN_PROG_NAME}"
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
