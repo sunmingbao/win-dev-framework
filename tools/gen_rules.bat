@@ -12,7 +12,7 @@
 :: 生成makefile规则
 
 @echo off
-set rule_file=c:\rules.txt
+set rule_file=obj\rules.txt
 
 echo #gen_rules > %rule_file%
 for /f  "delims=  " %%i in (obj\src_2.txt) do (

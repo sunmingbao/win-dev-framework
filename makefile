@@ -32,8 +32,8 @@ INC_RES_DIRS := --include-dir $(RES_DIR)
 INC_DIRS := -I$(PRJ_DIR)\inc -I$(RES_DIR)
 OBJ_DIR:=$(PRJ_DIR)\obj
 
-CAUSE_MK_OBJ_DIR:=$(shell mkdir $(OBJ_DIR))
-
+PREPAIR_OBJ_DIR:=$(shell mkdir $(OBJ_DIR))
+PREPAIR_OBJ_DIR:=$(shell del /F /Q $(OBJ_DIR)\\*)
 
 SRC_FILES_BASE_NAMES:=$(shell tools\get_src_files.bat)
 OBJ_FILES:=$(addprefix $(OBJ_DIR)\, $(addsuffix .o, $(SRC_FILES_BASE_NAMES)))
@@ -58,18 +58,18 @@ RES_OBJS := $(OBJ_DIR)\res.orc
 
 
 
-default: clean  $(target)
+default: $(target)
 
 
 $(target): $(ALL_OBJS)
 	$(CC) -o $@ $(ALL_OBJS)  $(LDFLAG)
-	-cmd.exe /c del c:\rules.txt
+
 
 $(OBJ_DIR)\res.orc: $(PRJ_DIR)\res\resource.rc
 	windres $(WINDRES_FLAG) -i $< -o $@   
 
 
--include c:\rules.txt
+-include $(OBJ_DIR)\rules.txt
 
 installer:
 	makensis $(PRJ_DIR)\package.nsi
