@@ -24,6 +24,17 @@ HWND    hwnd_frame;
 
 HWND hwndTip;
 
+#ifdef _USE_SPLITTER_FRAME
+HWND    hwnd_splt_we;
+HWND    hwnd_splt_ns;
+int display_left=1;
+int display_bottom=1;
+
+int we_pos;
+int ns_pos;
+
+#endif
+
 int display_toolbar=1;
 int display_statusbar=1;
 
@@ -87,6 +98,15 @@ LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
     
     int ret;
 
+#ifdef _USE_SPLITTER_FRAME
+    int upper_win_y=toolbar_height, 
+        right_win_x=we_pos, 
+        right_win_width=cxClient-we_pos, 
+        upper_win_height,
+        bottom_win_height;
+
+#endif
+
     switch (message)
     {
         case WM_CREATE:
@@ -99,7 +119,60 @@ LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
                         NULL,
                         g_hInstance, 
                         NULL);
+#ifdef _USE_SPLITTER_FRAME
+            hwnd_left = CreateWindow (szLeftWinClassName, TEXT ("sub win"),
+                WS_CHILD,
+                point.x, point.y,
+                we_pos-SPLT_WIDTH, ns_pos-SPLT_WIDTH,
+                hwnd, NULL, g_hInstance, NULL) ;
+
+            ShowWindow (hwnd_left, 1) ;
+            UpdateWindow (hwnd_left) ;
+
+            hwnd_splt_we= CreateWindow (szSpltWeClassName, TEXT ("sub win"),
+                WS_CHILD,
+                we_pos-SPLT_WIDTH,
+                            point.y,
+                  			SPLT_WIDTH, ns_pos-SPLT_WIDTH,
+                hwnd, NULL, g_hInstance, NULL) ;
+            ShowWindow (hwnd_splt_we, 1) ;
+            UpdateWindow (hwnd_splt_we) ;
+
+
+            hwnd_right = CreateWindow (szRightWinClassName, TEXT ("sub win"),
+                WS_CHILD,
+                we_pos,
+                            point.y,
+                  			cxClient-we_pos, ns_pos-SPLT_WIDTH,
+                hwnd, NULL, g_hInstance, NULL) ;
+
+            ShowWindow (hwnd_right, 1) ;
+            UpdateWindow (hwnd_right) ;
             
+            hwnd_splt_ns= CreateWindow (szSpltNsClassName, TEXT ("sub win"),
+                WS_CHILD,
+                point.x, ns_pos-SPLT_WIDTH,
+                cxClient, SPLT_WIDTH,
+                hwnd, NULL, g_hInstance, NULL) ;
+            
+            ShowWindow (hwnd_splt_ns, 1) ;
+            UpdateWindow (hwnd_splt_ns) ;
+
+            hwnd_bottom = CreateWindow (szBottomWinClassName, TEXT ("sub win"),
+                WS_CHILD,
+                point.x,    ns_pos,
+                  			cxClient, cyClient-ns_pos,
+                hwnd, NULL, g_hInstance, NULL) ;
+
+            ShowWindow (hwnd_bottom, 1) ;
+            UpdateWindow (hwnd_bottom) ;
+
+hMenu = GetMenu(hwnd);
+hMenu = GetSubMenu(hMenu, 1);
+AppendMenu(hMenu, MF_SEPARATOR, 0,  TEXT("")) ;
+AppendMenu(hMenu, MF_STRING|MF_CHECKED, IDM_APP_LEFT_WIN,  TEXT("×óÃæ°å")) ;
+AppendMenu(hMenu, MF_STRING|MF_CHECKED, IDM_APP_BOTTOM_WIN,  TEXT("µ×Ãæ°å")) ;
+#endif
             CreateToolbar();
 
             CreateStatusBar();
@@ -116,15 +189,92 @@ LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 
             return 0 ;
 
+#ifdef _USE_SPLITTER_FRAME
+        case WM_SPLITTER_X:
+        {
+            we_pos=wParam;
+            resize_window(hwnd);
+            return 0 ;
+        }
+
+        case WM_SPLITTER_Y:
+        {
+            ns_pos=wParam;
+            resize_window(hwnd);
+            return 0 ;
+        }
+
+#endif
 
         case WM_SIZE:
+        {
+      		cxClient = LOWORD (lParam) ;
+      		cyClient = HIWORD (lParam) ;
+
              MoveWindow	(	hwnd_toolbar, 	0, 0,
                 cxClient, toolbar_height, TRUE) ;
              
       	    MoveWindow	(	hwnd_statusbar, 0, cyClient-statusbar_height,
                 cxClient, statusbar_height, TRUE) ;
 
+#ifdef _USE_SPLITTER_FRAME
+            if (we_pos==0 || ns_pos==0)
+            {
+                we_pos = 200;
+                ns_pos = cyClient-300;
+
+            }
+
+        upper_win_y=display_toolbar?toolbar_height:0;
+
+        right_win_x=display_left?we_pos:0;
+        right_win_width=display_left?cxClient-we_pos:cxClient;
+        if (display_bottom)
+        {
+            upper_win_height=ns_pos-SPLT_WIDTH;
+            upper_win_height -= upper_win_y;
+        }
+        else
+        {
+            upper_win_height=cyClient;
+            upper_win_height -= upper_win_y;
+            upper_win_height -= (display_statusbar?statusbar_height:0);
+
+        }
+
+        bottom_win_height = cyClient-ns_pos;
+        bottom_win_height -= (display_statusbar?statusbar_height:0);
+
+            //ClientToScreen(hwnd, &point);
+           			// Move the buttons to the new center
+
+      	    MoveWindow	(	hwnd_toolbar, 	0, 0,
+                cxClient, toolbar_height, TRUE) ;
+
+      	    MoveWindow	(	hwnd_left, 	0, upper_win_y,
+                we_pos-SPLT_WIDTH, upper_win_height, TRUE) ;
+
+      	    MoveWindow	(	hwnd_splt_we, 	we_pos-SPLT_WIDTH,
+                            upper_win_y,
+                  			SPLT_WIDTH, upper_win_height, TRUE) ;
+
+      	    MoveWindow	(	hwnd_right, 	right_win_x,
+                            upper_win_y,
+                  			right_win_width, upper_win_height, TRUE) ;
+
+      	    MoveWindow	(	hwnd_splt_ns, 	0, ns_pos-SPLT_WIDTH,
+                cxClient, SPLT_WIDTH, TRUE) ;
+
+      	    MoveWindow	(	hwnd_bottom, 0,    ns_pos,
+                  			cxClient, bottom_win_height, TRUE) ;
+
+      	    MoveWindow	(	hwnd_statusbar, 	0, cyClient-statusbar_height,
+                cxClient, statusbar_height, TRUE) ;
+
+
+#endif
           	return 0 ;
+        }
 
 
         case WM_PAINT :
@@ -241,7 +391,51 @@ LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
                     }
                     resize_window(hwnd_frame);
        				return 0 ;
+#ifdef _USE_SPLITTER_FRAME
+        case    IDM_APP_BOTTOM_WIN:
+        if (display_bottom)
+        {
+            display_bottom = 0;
+				ShowWindow(hwnd_bottom, 0);
+            ShowWindow(hwnd_splt_ns, 0);
+            UpdateWindow (hwnd_frame) ;
+            CheckMenuItem (hMenu, item_id, MF_UNCHECKED) ;
 
+        }
+        else
+        {
+            display_bottom= 1;
+				ShowWindow(hwnd_bottom, 1);
+            ShowWindow(hwnd_splt_ns, 1);
+            UpdateWindow (hwnd_frame) ;
+            CheckMenuItem (hMenu, item_id, MF_CHECKED) ;
+        }
+        resize_window(hwnd_frame);
+			return 0 ;
+
+    case    IDM_APP_LEFT_WIN:
+        if (display_left)
+        {
+            display_left = 0;
+				ShowWindow(hwnd_left, 0);
+            ShowWindow(hwnd_splt_we, 0);
+            UpdateWindow (hwnd_frame) ;
+            CheckMenuItem (hMenu, item_id, MF_UNCHECKED) ;
+
+
+
+        }
+        else
+        {
+            display_left= 1;
+				ShowWindow(hwnd_left, 1);
+            ShowWindow(hwnd_splt_we, 1);
+            UpdateWindow (hwnd_frame) ;
+            CheckMenuItem (hMenu, item_id, MF_CHECKED) ;
+        }
+        resize_window(hwnd_frame);
+			return 0 ;
+#endif
 
                 case    IDT_TOOLBAR_BUTTON1:
                     WinPrintf(hwnd, "IDT_TOOLBAR_BUTTON1");

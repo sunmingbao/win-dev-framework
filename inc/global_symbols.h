@@ -31,6 +31,20 @@ extern int  doc_modified;
 void save_doc_file(TCHAR *file_name);
 void load_doc_file(TCHAR *file_name);
 
+#ifdef _USE_SPLITTER_FRAME
+#define  WM_SPLITTER_X     (WM_USER + 3)
+#define  WM_SPLITTER_Y     (WM_USER + 4)
+
+extern TCHAR szLeftWinClassName[];
+extern HWND  hwnd_left;
+extern TCHAR szRightWinClassName[];
+extern HWND    hwnd_right;
+extern TCHAR szBottomWinClassName[];
+extern HWND    hwnd_bottom;
+#define    SPLT_WIDTH    (6)
+extern TCHAR szSpltWeClassName[];
+extern TCHAR szSpltNsClassName[];
+#endif
 
 extern HWND    hwnd_toolbar;
 extern int     toolbar_height;

@@ -47,7 +47,7 @@ BEGIN
     	POPUP "²é¿´(&V)"
     	BEGIN
     	        MENUITEM "¹¤¾ßÀ¸(&T)", 				IDM_APP_TOOLBAR_WIN, CHECKED
-        		MENUITEM "×´Ì¬À¸(&S)", 				IDM_APP_STATUSBAR_WIN, CHECKED
+        	MENUITEM "×´Ì¬À¸(&S)", 				IDM_APP_STATUSBAR_WIN, CHECKED
     	END
 
     	POPUP "°ïÖú(&H)"

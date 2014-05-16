@@ -20,11 +20,16 @@ CFLAG := -Wall -O2  -DBUILD_TIME='"$(BUILD_TIME)"' -D_WIN32_IE=0x0501 -D_WIN32_W
 LDFLAG := -mwindows  -s  -lkernel32 -luser32 -lgdi32 -lcomctl32 -lws2_32 
 
 USE_AV=0
+USE_SPLITTER_FRAME=0
+
 ifeq ($(USE_AV),1)
     CFLAG :=  $(CFLAG) -D_USE_AV 
     LDFLAG := $(LDFLAG) -lavformat.dll 
 endif
 
+ifeq ($(USE_SPLITTER_FRAME),1)
+    CFLAG :=  $(CFLAG) -D_USE_SPLITTER_FRAME 
+endif
 
 PRJ_DIR := .
 RES_DIR := $(PRJ_DIR)\res

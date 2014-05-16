@@ -29,6 +29,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
     register_frame();
 
+#ifdef _USE_SPLITTER_FRAME
+    register_left_win();
+    register_right_win();
+    register_bottom_win();
+    register_splt_wins();
+#endif
+
     create_windows(iCmdShow);
 
  	hAccel = LoadAccelerators (hInstance, TEXT("MY_ACCELER")) ;

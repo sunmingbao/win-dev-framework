@@ -18,6 +18,8 @@
 
 #define IDM_APP_EXIT               40006
 
+#define IDM_APP_LEFT_WIN           40009
+#define IDM_APP_BOTTOM_WIN         40010
 #define IDM_APP_TOOLBAR_WIN        40011
 #define IDM_APP_STATUSBAR_WIN      40012
 
@@ -42,4 +44,9 @@
 #define ID_FILE_RECENT_FILE_BEGIN    40700
 #define MAX_RECENT_FILE_NUM     10
 
+
+#define    ID_BUTTON_LEFT_CLOSE    (45001)
+#define    ID_BUTTON_BOTTOM_CLOSE    (45002)
+
+#define    ID_TV    (45003)
 
