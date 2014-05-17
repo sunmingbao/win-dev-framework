@@ -7,36 +7,21 @@
  * 作者: 孙明保
  * 邮箱: sunmingbao@126.com
  */
- 
+
+#ifdef _USE_SPLITTER_FRAME
 #include <windows.h>
 #include <time.h>
 
 #include "common.h"
 #include "global_symbols.h"
+#include "app_resource.h"
 #include "res.h"
 
 TCHAR szBottomWinClassName[] = TEXT ("bottom_win") ;
 HWND    hwnd_bottom;
 
 HWND  hwnd_button_bottom_close;
-#if 0
-HWND    hwnd_b_we_splitter;
-int     b_we_pos;
-
-HWND    hwnd_b2_tab;
 HWND    hwnd_b2_tab1;
-
-TCHAR *tab_b2_icons[] = {TEXT("info_icon")};
-TCHAR *tab_b2_labels[] = {TEXT("信息")};
-
-HWND    hwnd_b_tab;
-HWND    hwnd_b_tab1;
-TCHAR sz_bTab1WinClassName[] = TEXT ("tab1_win") ;
-
-TCHAR *tab_b_icons[] = {TEXT("stats_icon")};
-TCHAR *tab_b_labels[] = {TEXT("统计")};
-int err_cnt, info_cnt;
-#endif
 
 LRESULT CALLBACK bottom_WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -59,38 +44,15 @@ static HMENU	hMenu ;
     20, 20, 30, 30,
     hwnd, (HMENU)ID_BUTTON_BOTTOM_CLOSE,
                g_hInstance, NULL) ;
-#if 0
-           hwnd_b_we_splitter = CreateWindow (szSpltWeClassName, TEXT ("sub win"),
-                WS_CHILD|WS_VISIBLE,
-                SPLT_WIDTH,   point.y,  SPLT_WIDTH, SPLT_WIDTH,
-                hwnd, NULL, g_hInstance, NULL) ;
-;
-#if 1
-            hwnd_b_tab=DoCreateTabControl(g_hInstance, hwnd_bottom
-                ,WS_CHILD | WS_CLIPSIBLINGS | WS_VISIBLE | TCS_BOTTOM
-                , ARRAY_SIZE(tab_b_icons), tab_b_icons, tab_b_labels);
-#else
-            hwnd_b_tab=DoCreateFlatTabControl(g_hInstance, hwnd_bottom
-                ,szFlatTabWinClassName
-                , ARRAY_SIZE(tab_b_labels), tab_b_labels);
-#endif
-            hwnd_b_tab1=create_tab_win(g_hInstance, hwnd_bottom, szStatsWinClassName, WS_CHILD | WS_VISIBLE | WS_BORDER);
 
-            hwnd_b2_tab=DoCreateTabControl(g_hInstance, hwnd_bottom
-                ,WS_CHILD | WS_CLIPSIBLINGS | WS_VISIBLE | TCS_BOTTOM
-                , ARRAY_SIZE(tab_b2_icons), tab_b2_icons, tab_b2_labels);
-
-            hwnd_b2_tab1=create_tab_win(g_hInstance, hwnd_bottom, TEXT("edit")
-                , WS_CHILD | WS_BORDER | WS_VISIBLE | WS_VSCROLL | ES_MULTILINE|ES_AUTOVSCROLL|ES_WANTRETURN);
+            hwnd_b2_tab1=CreateWindow (TEXT("edit"), TEXT (""),
+                WS_CHILD | WS_BORDER | WS_VISIBLE | WS_VSCROLL | ES_READONLY|ES_MULTILINE|ES_AUTOVSCROLL|ES_WANTRETURN,
+                10, 10,
+                50, 50,
+                hwnd_bottom, NULL, g_hInstance, NULL) ;
+            SendMessage(hwnd_b2_tab1, WM_SETFONT, (WPARAM)h_font_32_px, 0);
             return 0 ;
 
-        case WM_SPLITTER_X:
-        {
-            b_we_pos=wParam;
-            resize_window(hwnd);
-            return 0 ;
-        }
-#endif
         case WM_SIZE:
 
       		cxClient = LOWORD (lParam) ;
@@ -99,36 +61,10 @@ static HMENU	hMenu ;
 
             MoveWindow	(hwnd_button_bottom_close, 	cxClient-25, 0,
                 25, 25, TRUE) ;
-#if 0
-
-            MoveWindow	(hwnd_b_tab, 	0, 0,
-                b_we_pos-SPLT_WIDTH, cyClient, TRUE) ;
-            GetClientRect(hwnd_b_tab,&rect);
-            TabCtrl_AdjustRect(hwnd_b_tab, FALSE, &rect); 
-
-            MoveWindow(hwnd_b_tab1, 	0, 0,
-                b_we_pos-SPLT_WIDTH, rect.bottom-rect.top, TRUE) ;
-            MoveWindow	(hwnd_b_tab, 	0, cyClient-flat_tab_height,
-                cxClient-25, flat_tab_height, TRUE) ;
-
-            MoveWindow(hwnd_b_tab1, 	0, 0,
-                cxClient-25, cyClient-flat_tab_height, TRUE) ;
-            MoveWindow(hwnd_b_tab2, 	0, 0,
-                cxClient-25, cyClient-flat_tab_height, TRUE) ;
 
 
-      	    MoveWindow	(hwnd_b_we_splitter, 	b_we_pos-SPLT_WIDTH,
-                            0,
-                  			SPLT_WIDTH, cyClient, TRUE) ;
-
-            MoveWindow	(hwnd_b2_tab, 	b_we_pos, 0,
-                cxClient-b_we_pos-25, cyClient, TRUE) ;
-            GetClientRect(hwnd_b2_tab,&rect);
-            TabCtrl_AdjustRect(hwnd_b2_tab, FALSE, &rect); 
-
-            MoveWindow(hwnd_b2_tab1, 	b_we_pos, 0,
-                cxClient-b_we_pos-25, rect.bottom-rect.top, TRUE) ;
-#endif
+            MoveWindow(hwnd_b2_tab1, 	0, 0,
+                cxClient-25, cyClient, TRUE) ;
 
             return 0 ;
 
@@ -176,7 +112,7 @@ int register_bottom_win()
 
 }
 
-#if 0
+
 void edit_append_text(HWND hwnd, TCHAR   *szBuffer)
 {
     int ndx = GetWindowTextLength (hwnd);
@@ -279,5 +215,6 @@ void print_mem(void *start_addr, uint32_t length)
 
 
 }
+
 
 #endif

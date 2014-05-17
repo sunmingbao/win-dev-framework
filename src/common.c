@@ -43,6 +43,24 @@ void add_tip(HWND htip_control, HWND hwnd, TCHAR *tips)
     SendMessage(htip_control,TTM_ADDTOOL,0,(LPARAM)&ti);
 }
 
+HTREEITEM insertTvItem(HWND  hwnd_treeview, const wchar_t* str, HTREEITEM parent, HTREEITEM insertAfter,
+                     int imageIndex, int selectedImageIndex, LPARAM lParam)
+{
+    // build TVINSERTSTRUCT
+    TVINSERTSTRUCT insertStruct;
+    insertStruct.hParent = parent;
+    insertStruct.hInsertAfter = insertAfter;
+    insertStruct.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE|TVIF_PARAM;
+    insertStruct.item.pszText = (LPWSTR)str;
+    insertStruct.item.cchTextMax = sizeof(str)/sizeof(str[0]);
+    insertStruct.item.iImage = imageIndex;
+    insertStruct.item.iSelectedImage = selectedImageIndex;
+    insertStruct.item.lParam = lParam;
+
+    // insert the item
+    return (HTREEITEM)SendMessage(hwnd_treeview, TVM_INSERTITEM,
+                                    0, (LPARAM)&insertStruct);
+}
 
 
 

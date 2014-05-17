@@ -24,6 +24,8 @@
 #define    ARRAY_SIZE(array_name)    (sizeof(array_name)/sizeof(array_name[0]))
 
 void add_tip(HWND htip_control, HWND hwnd, TCHAR *tips);
+HTREEITEM insertTvItem(HWND  hwnd_treeview, const wchar_t* str, HTREEITEM parent, HTREEITEM insertAfter,
+                     int imageIndex, int selectedImageIndex, LPARAM lParam);
 
 static inline HANDLE launch_thread(LPTHREAD_START_ROUTINE ThreadFunc, LPVOID lpParameter)
 {

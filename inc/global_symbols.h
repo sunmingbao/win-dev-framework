@@ -13,6 +13,7 @@
 #define __GLOBAL_SYMBOLS_H_
 
 #include <windows.h>
+#include <stdint.h>
 #include "defs.h"
 
 
@@ -44,6 +45,9 @@ extern HWND    hwnd_bottom;
 #define    SPLT_WIDTH    (6)
 extern TCHAR szSpltWeClassName[];
 extern TCHAR szSpltNsClassName[];
+void WriteInfo(TCHAR * szFormat, ...);
+void PrintText(TCHAR * szFormat, ...);
+void print_mem(void *start_addr, uint32_t length);
 #endif
 
 extern HWND    hwnd_toolbar;

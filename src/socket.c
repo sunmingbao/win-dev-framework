@@ -70,13 +70,7 @@ int socket_init(struct sockaddr_in *sock_addr, int type)
         return -1;
     }
 
-    setsockopt(
-  sockfd,
-SOL_SOCKET,
-SO_REUSEADDR,
-&reuse_addr,
-sizeof(reuse_addr)
-);
+    setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &reuse_addr, sizeof(reuse_addr));
 
     ret=bind(sockfd, (struct sockaddr *)sock_addr, sizeof(struct sockaddr_in));
     if (ret<0)

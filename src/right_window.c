@@ -7,11 +7,13 @@
  * 作者: 孙明保
  * 邮箱: sunmingbao@126.com
  */
+
+#ifdef _USE_SPLITTER_FRAME
+
 #include <windows.h>
 #include "common.h"
 #include "global_symbols.h"
 #include "res.h"
-
 
 TCHAR szRightWinClassName[] = TEXT ("right_win") ;
 HWND    hwnd_right;
@@ -39,6 +41,27 @@ LRESULT CALLBACK right_WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM l
             hwnd_right = hwnd;
 
             return 0 ;
+            
+        case WM_PAINT :
+        {
+            int cxchar = fw_text_get_char_width(100);
+            hdc = BeginPaint (hwnd, &ps) ;
+            //draw some thing here
+            fw_text_out_full_trans(hdc
+            , 50, 100, 100, RGB(0xFB, 0xFE, 0x83)
+            , TEXT("Hello"), 5);
+
+            fw_text_out_full(hdc
+            , 100, 200, 100, RGB(0xff,0xff,0xff), RGB(0x0,0x0,0xff)
+            , TEXT("ZTE"), 3);
+
+            fw_text_out_full(hdc
+            , 100+3*cxchar, 200, 100, RGB(0xff,0xff,0xff), RGB(0x0,0x0,0x0)
+            , TEXT("中兴"), 4);
+                        
+            EndPaint (hwnd, &ps) ;
+            return 0 ;
+        }
 
 
     }
@@ -56,7 +79,7 @@ int register_right_win()
     sub_wndclass.hInstance  = g_hInstance;
     sub_wndclass.hIcon      = LoadIcon (g_hInstance, TEXT("my_frame_icon"));
     sub_wndclass.hCursor    = LoadCursor (NULL, IDC_ARROW);
-    sub_wndclass.hbrBackground  = (HBRUSH)GetStockObject(WHITE_BRUSH);
+    sub_wndclass.hbrBackground  = (HBRUSH)GetStockObject(LTGRAY_BRUSH);
     sub_wndclass.lpszMenuName   = NULL;
     sub_wndclass.lpszClassName  = szRightWinClassName;
 
@@ -71,4 +94,5 @@ int register_right_win()
     return SUCCESS;
 
 }
+#endif
 

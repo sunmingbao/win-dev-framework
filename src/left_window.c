@@ -7,6 +7,9 @@
  * 作者: 孙明保
  * 邮箱: sunmingbao@126.com
  */
+
+#ifdef _USE_SPLITTER_FRAME
+
 #include <windows.h>
 #include <windowsx.h>
 #include "common.h"
@@ -17,12 +20,9 @@ TCHAR szLeftWinClassName[] = TEXT ("left_win") ;
 HWND    hwnd_left;
 HWND  hwnd_button_left_close;
 
-#if 0
+
 HWND    hwnd_tab1;
 TCHAR szTab1WinClassName[] = TEXT ("tab1_win") ;
-
-TCHAR *tab_icons[] = {TEXT("my_frame_icon"), TEXT("my_frame_icon")};
-TCHAR *tab_labels[] = {TEXT("tab1"), TEXT("tab2")};
 
 LRESULT CALLBACK tab1_WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam);
 
@@ -30,7 +30,7 @@ LRESULT CALLBACK tab1_WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lP
 
 HWND  hwnd_tv;
 
-#endif
+
 
 LRESULT CALLBACK left_WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -52,7 +52,7 @@ LRESULT CALLBACK left_WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lP
                                hwnd, (HMENU)ID_BUTTON_LEFT_CLOSE,
                g_hInstance, NULL) ;
 
-#if 0
+#if 1
             register_tab1_win();
             hwnd_tab1 = CreateWindow (szTab1WinClassName, TEXT (""),
                 WS_CHILD | WS_VISIBLE | WS_BORDER,
@@ -68,7 +68,7 @@ LRESULT CALLBACK left_WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lP
 
             MoveWindow	(hwnd_button_left_close, 	cxClient-25, 0,
                 25, 25, TRUE) ;
-            //MoveWindow(hwnd_tab1, 	0, 25,  cxClient, cyClient-25, TRUE) ;
+            MoveWindow(hwnd_tab1, 	0, 25,  cxClient, cyClient-25, TRUE) ;
             return 0 ;
 
 
@@ -116,7 +116,7 @@ int register_left_win()
 
 }
 
-#if 0
+
 int register_tab1_win()
 {
     WNDCLASS    sub_wndclass;
@@ -160,6 +160,8 @@ LRESULT CALLBACK tab1_WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lP
     {
         case WM_CREATE:
         {
+#if 1
+
             HIMAGELIST imageList;
             HICON icon;
 
@@ -170,7 +172,6 @@ LRESULT CALLBACK tab1_WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lP
                                hwnd, (HMENU)ID_TV,
                g_hInstance, NULL) ;
 
-#if 0
             imageList = ImageList_Create(32,
                                           32,
                                           ILC_COLORDDB | ILC_MASK,
@@ -180,35 +181,34 @@ LRESULT CALLBACK tab1_WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lP
 // load icons and add them to ImageList
 // PARAMS: hInstance, filename, type, width, height, flag
 icon = (HICON)LoadImage(g_hInstance,
-                          TEXT("config_icon"),
+                          TEXT("tb_icon_1"),
                           IMAGE_ICON, 32, 32,
                           LR_DEFAULTCOLOR);
 ImageList_AddIcon(imageList, icon);
 icon = (HICON)LoadImage(g_hInstance,
-                          TEXT("stream_icon"),
+                          TEXT("tb_icon_1"),
                           IMAGE_ICON, 32, 32,
                           LR_DEFAULTCOLOR);
 ImageList_AddIcon(imageList, icon);
 icon = (HICON)LoadImage(g_hInstance,
-                          TEXT("speed_icon"),
+                          TEXT("tb_icon_1"),
                           IMAGE_ICON, 32, 32,
                           LR_DEFAULTCOLOR);
 ImageList_AddIcon(imageList, icon);
 icon = (HICON)LoadImage(g_hInstance,
-                          TEXT("cap_cfg_icon"),
+                          TEXT("tb_icon_1"),
                           IMAGE_ICON, 32, 32,
                           LR_DEFAULTCOLOR);
 ImageList_AddIcon(imageList, icon);
 SendMessage(hwnd_tv, TVM_SETIMAGELIST,
                   (WPARAM)TVSIL_NORMAL, (LPARAM)imageList);
-#endif
     // add root item
-    parentItem = insertItem(hwnd_tv, TEXT("配置"), TVI_ROOT, TVI_LAST, 0, 0, NULL);
+    parentItem = insertTvItem(hwnd_tv, TEXT("分组"), TVI_ROOT, TVI_LAST, 0, 0, NULL);
 
     // add some children
-    childItem1 = insertItem(hwnd_tv, TEXT("流"), parentItem, TVI_LAST, 1, 1, NULL);
-    childItem2 = insertItem(hwnd_tv, TEXT("流控"), parentItem, TVI_LAST, 2, 2, NULL);
-    childItem3 = insertItem(hwnd_tv, TEXT("抓包"), parentItem, TVI_LAST, 3, 3, NULL);
+    childItem1 = insertTvItem(hwnd_tv, TEXT("第1组"), parentItem, TVI_LAST, 1, 1, NULL);
+    childItem2 = insertTvItem(hwnd_tv, TEXT("第2组"), parentItem, TVI_LAST, 2, 2, NULL);
+    childItem3 = insertTvItem(hwnd_tv, TEXT("第3组"), parentItem, TVI_LAST, 3, 3, NULL);
 
     TreeView_Expand(hwnd_tv, parentItem, TVM_EXPAND);
 
@@ -216,6 +216,7 @@ SendMessage(hwnd_tv, TVM_SETIMAGELIST,
             ShowWindow (hwnd_tv, 1) ;
             UpdateWindow (hwnd_tv) ;
     TreeView_Select(hwnd_tv, childItem1, TVGN_CARET);
+#endif
 
             return 0 ;
         }
@@ -223,8 +224,7 @@ SendMessage(hwnd_tv, TVM_SETIMAGELIST,
         case WM_SIZE:
       		cxClient = LOWORD (lParam) ;
       		cyClient = HIWORD (lParam) ;
-            MoveWindow(hwnd_tv, 	0, 0,
-                cxClient, cyClient, TRUE) ;
+            MoveWindow(hwnd_tv, 	0, 0, cxClient, cyClient, TRUE) ;
 
             return 0 ;
 
@@ -238,52 +238,52 @@ SendMessage(hwnd_tv, TVM_SETIMAGELIST,
   			EndPaint (hwnd, &ps) ;
 			return 0 ;
 
-case WM_NOTIFY:
-{
-   switch(LOWORD(wParam))
-   { 
-     case ID_TV:
-     // if code == NM_CLICK - Single click on an item
-     if(((LPNMHDR)lParam)->code == TVN_SELCHANGED) 
-     {
-        HTREEITEM Selected;
-        TV_ITEM tvi;
-        char Text[255]="";
-        memset(&tvi,0,sizeof(tvi));
-        Selected=(HTREEITEM)SendDlgItemMessage(hwnd_tab1,
-           ID_TV,TVM_GETNEXTITEM,TVGN_CARET,(LPARAM)Selected);
+    case WM_NOTIFY:
+    {
+       switch(LOWORD(wParam))
+       { 
+         case ID_TV:
+         // if code == NM_CLICK - Single click on an item
+         if(((LPNMHDR)lParam)->code == TVN_SELCHANGED) 
+         {
+            HTREEITEM Selected;
+            TV_ITEM tvi;
+            char Text[255]="";
+            memset(&tvi,0,sizeof(tvi));
+            Selected=(HTREEITEM)SendDlgItemMessage(hwnd_tab1,
+               ID_TV,TVM_GETNEXTITEM,TVGN_CARET,(LPARAM)Selected);
 
-       if (!init_over) break;
-       
-       if (childItem1==Selected)
-        {
-            ShowWindow (hwnd_stream, 1) ;
-            ShowWindow (hwnd_fc, 0) ;
-        }
+           if (!init_over) break;
+           
+           if (childItem1==Selected)
+            {
+                //ShowWindow (hwnd_stream, 1) ;
+                //ShowWindow (hwnd_fc, 0) ;
+            }
 
-       else if (childItem2==Selected)
-        {
-            //ShowWindow (hwnd_stream, 0) ;
-            //ShowWindow (hwnd_fc, 1) ;
-            //ret=DialogBox(g_hInstance, TEXT("FC_CFG_DLG"), hwnd, FcCfgDlgProc);
+           else if (childItem2==Selected)
+            {
+                //ShowWindow (hwnd_stream, 0) ;
+                //ShowWindow (hwnd_fc, 1) ;
+                //ret=DialogBox(g_hInstance, TEXT("FC_CFG_DLG"), hwnd, FcCfgDlgProc);
 
-            //TreeView_SelectItem(hwnd_tv, childItem1);
-        }
-      else if (childItem3==Selected)
-        {
-            //ShowWindow (hwnd_stream, 0) ;
-            //ShowWindow (hwnd_fc, 1) ;
-            //ret=DialogBox(g_hInstance, TEXT("PKT_CAP_CFG_DLG"), hwnd, PktCapCfgDlgProc);
+                //TreeView_SelectItem(hwnd_tv, childItem1);
+            }
+          else if (childItem3==Selected)
+            {
+                //ShowWindow (hwnd_stream, 0) ;
+                //ShowWindow (hwnd_fc, 1) ;
+                //ret=DialogBox(g_hInstance, TEXT("PKT_CAP_CFG_DLG"), hwnd, PktCapCfgDlgProc);
 
-            //TreeView_SelectItem(hwnd_tv, childItem1);
-        }
+                //TreeView_SelectItem(hwnd_tv, childItem1);
+            }
 
 
-     }
-   }
-break;
+         }
+       }
+    break;
 
-}
+    }
 
     }
     

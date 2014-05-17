@@ -15,17 +15,9 @@
 #include <tchar.h> 
 #include <windowsx.h>
 
-void fw_text_out_full(HDC hdc, int x, int y, int height
-    ,COLORREF bg, COLORREF fg, TCHAR *text, int len);
+extern HFONT h_font_32_px, h_font_resolve;
 
-void fw_text_out_full_trans(HDC hdc, int x, int y, int height
-    ,COLORREF fg, TCHAR *text, int len);
-
-int fw_text_get_char_width(int height);
-void fw_text_out_middle_trans(HDC hdc, RECT *rect, int height
-    ,COLORREF fg, TCHAR *text, int len);
-
-HFONT  create_font(int height, const char *font_name);
+void app_resource_init();
 #endif
 
 

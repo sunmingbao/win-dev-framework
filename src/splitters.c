@@ -7,6 +7,9 @@
  * 作者: 孙明保
  * 邮箱: sunmingbao@126.com
  */
+
+#ifdef _USE_SPLITTER_FRAME
+
 #include <windows.h>
 #include "common.h"
 #include "global_symbols.h"
@@ -381,7 +384,7 @@ int register_splt_wins()
 }
 
 
-
+#endif
 
 
 

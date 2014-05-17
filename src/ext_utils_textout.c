@@ -87,4 +87,49 @@ int fw_text_get_char_width(int height)
 
 }
 
+void fw_text_out_middle_trans(HDC hdc, RECT *rect, int height
+    ,COLORREF fg, TCHAR *text, int len)
+{
+    HFONT  h_old_font;
+    LOGFONT lf ;
+    
+    memset(&lf, 0, sizeof(lf));
+    lf.lfCharSet = 1;
+
+    lf.lfHeight = height;
+    lf.lfPitchAndFamily = FIXED_PITCH;
+    lf.lfWeight  = FW_BLACK;
+
+    
+    h_old_font = SelectObject(hdc, CreateFontIndirect(&lf)) ;
+
+    SetBkMode(hdc, TRANSPARENT);
+    SetTextColor(hdc, fg) ;
+    DrawText (hdc, text, len, rect, DT_SINGLELINE | DT_CENTER | DT_VCENTER) ; 
+
+    DeleteObject(SelectObject(hdc, h_old_font)) ;
+}
+
+
+HFONT  create_font(int height, const char *font_name)
+{
+    HFONT  h_font;
+    LOGFONT lf ;
+    
+    memset(&lf, 0, sizeof(lf));
+    lf.lfCharSet = 1;
+
+    lf.lfHeight = height;
+    lf.lfPitchAndFamily = FIXED_PITCH;
+    lf.lfWeight  = FW_BLACK;
+
+    if (NULL != font_name)
+        strcpy(lf.lfFaceName, font_name);
+
+    
+    h_font = CreateFontIndirect(&lf);
+
+    return h_font;
+}
+
 

@@ -187,6 +187,7 @@ AppendMenu(hMenu, MF_STRING|MF_CHECKED, IDM_APP_BOTTOM_WIN,  TEXT("底面板")) ;
 
             av_test();
 
+            WriteInfo(TEXT("欢迎使用win-dev-framework"));
             return 0 ;
 
 #ifdef _USE_SPLITTER_FRAME
@@ -283,7 +284,7 @@ AppendMenu(hMenu, MF_STRING|MF_CHECKED, IDM_APP_BOTTOM_WIN,  TEXT("底面板")) ;
             hdc = BeginPaint (hwnd, &ps) ;
             //draw some thing here
             fw_text_out_full_trans(hdc
-            , 50, 100, 100, RGB(0xee,0x3d,0x11)
+            , 50, 100, 100, RGB(0xFB, 0xFE, 0x83)
             , TEXT("Hello"), 5);
 
             fw_text_out_full(hdc

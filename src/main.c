@@ -10,7 +10,7 @@
 #include <windows.h>
 #include "env.h"
 #include "global_symbols.h"
-
+#include "app_resource.h"
 
 HINSTANCE g_hInstance;
 int       init_over;
@@ -26,6 +26,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
     g_hInstance = hInstance;
 
     env_init();
+    app_resource_init();
+
 
     register_frame();
 
