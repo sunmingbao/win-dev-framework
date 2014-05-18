@@ -42,5 +42,12 @@ static inline HANDLE launch_thread(LPTHREAD_START_ROUTINE ThreadFunc, LPVOID lpP
 
 }
 
+static inline void refresh_window(HWND hwnd)
+{
+    InvalidateRect(hwnd, NULL, TRUE);
+    UpdateWindow(hwnd);
+}
+
+
 #endif
 

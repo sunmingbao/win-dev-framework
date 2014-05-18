@@ -23,6 +23,16 @@ tb_icon_1     ICON "tb_icon_1.ico"
 tb_icon_2     ICON "tb_icon_2.ico"
 tb_icon_3     ICON "tb_icon_3.ico"
 
+view_icon     ICON "view.ico"
+all_icon      ICON "all.ico"
+single_icon   ICON "single.ico"
+
+icon_on_line     BITMAP  "on_line.bmp"
+icon_off_line    BITMAP  "off_line.bmp"
+
+icon_do_job          BITMAP  "do_job.bmp"
+icon_job_finished    BITMAP  "job_finished.bmp"
+
 main_window_cursor  CURSOR "DockVert.cur"
 
 

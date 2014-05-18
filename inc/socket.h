@@ -22,6 +22,7 @@
 int win_socket_init();
 int udp_socket_init(const char *ipstr, uint16_t port);
 int tcp_socket_init(const char *ipstr, uint16_t port);
+void set_socket_timeout(int sockfd, int snd_timeout_ms, int rcv_timeout_ms);
 int fd_readable(int fd, int usec);
 int udp_socket_recvfrom(int sockfd, void *buf, int buf_size, struct sockaddr_in *peer_addr);
 int udp_socket_sendto(int sockfd, void *buf, int buf_size, struct sockaddr_in *peer_addr);

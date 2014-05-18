@@ -48,6 +48,15 @@ extern TCHAR szSpltNsClassName[];
 void WriteInfo(TCHAR * szFormat, ...);
 void PrintText(TCHAR * szFormat, ...);
 void print_mem(void *start_addr, uint32_t length);
+#ifdef _DEBUG
+#define    DBG_PRINT(fmt, args...) \
+    do \
+    { \
+        WriteInfo("DBG:%s(%d)-%s:\n"fmt"\n", __FILE__,__LINE__,__FUNCTION__,##args); \
+    } while (0)
+#else
+#define    DBG_PRINT(fmt, args...) do { ; } while (0)
+#endif
 #endif
 
 extern HWND    hwnd_toolbar;

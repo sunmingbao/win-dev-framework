@@ -207,6 +207,15 @@ AppendMenu(hMenu, MF_STRING|MF_CHECKED, IDM_APP_BOTTOM_WIN,  TEXT("µ×Ãæ°å")) ;
 
 #endif
 
+        case WM_GETMINMAXINFO:
+        {
+            MINMAXINFO* lpMMI = (void *)lParam;
+            lpMMI->ptMinTrackSize.x = 650;
+            lpMMI->ptMinTrackSize.y = 450;
+            return 0 ;
+
+        }
+
         case WM_SIZE:
         {
       		cxClient = LOWORD (lParam) ;
@@ -222,8 +231,14 @@ AppendMenu(hMenu, MF_STRING|MF_CHECKED, IDM_APP_BOTTOM_WIN,  TEXT("µ×Ãæ°å")) ;
             if (we_pos==0 || ns_pos==0)
             {
                 we_pos = 200;
-                ns_pos = cyClient-300;
+                ns_pos = cyClient-200;
 
+            }
+
+            if (cxClient>0 && cyClient>0)
+            {
+                if (ns_pos>=cyClient) ns_pos = cyClient/2;
+                else if (ns_pos<=toolbar_height) ns_pos = toolbar_height+100;
             }
 
         upper_win_y=display_toolbar?toolbar_height:0;

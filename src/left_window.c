@@ -181,34 +181,34 @@ LRESULT CALLBACK tab1_WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lP
 // load icons and add them to ImageList
 // PARAMS: hInstance, filename, type, width, height, flag
 icon = (HICON)LoadImage(g_hInstance,
-                          TEXT("tb_icon_1"),
+                          TEXT("view_icon"),
                           IMAGE_ICON, 32, 32,
                           LR_DEFAULTCOLOR);
 ImageList_AddIcon(imageList, icon);
 icon = (HICON)LoadImage(g_hInstance,
-                          TEXT("tb_icon_1"),
+                          TEXT("all_icon"),
                           IMAGE_ICON, 32, 32,
                           LR_DEFAULTCOLOR);
 ImageList_AddIcon(imageList, icon);
 icon = (HICON)LoadImage(g_hInstance,
-                          TEXT("tb_icon_1"),
+                          TEXT("single_icon"),
                           IMAGE_ICON, 32, 32,
                           LR_DEFAULTCOLOR);
 ImageList_AddIcon(imageList, icon);
 icon = (HICON)LoadImage(g_hInstance,
-                          TEXT("tb_icon_1"),
+                          TEXT("single_icon"),
                           IMAGE_ICON, 32, 32,
                           LR_DEFAULTCOLOR);
 ImageList_AddIcon(imageList, icon);
 SendMessage(hwnd_tv, TVM_SETIMAGELIST,
                   (WPARAM)TVSIL_NORMAL, (LPARAM)imageList);
     // add root item
-    parentItem = insertTvItem(hwnd_tv, TEXT("分组"), TVI_ROOT, TVI_LAST, 0, 0, NULL);
+    parentItem = insertTvItem(hwnd_tv, TEXT("视图"), TVI_ROOT, TVI_LAST, 0, 0, NULL);
 
     // add some children
-    childItem1 = insertTvItem(hwnd_tv, TEXT("第1组"), parentItem, TVI_LAST, 1, 1, NULL);
-    childItem2 = insertTvItem(hwnd_tv, TEXT("第2组"), parentItem, TVI_LAST, 2, 2, NULL);
-    childItem3 = insertTvItem(hwnd_tv, TEXT("第3组"), parentItem, TVI_LAST, 3, 3, NULL);
+    childItem1 = insertTvItem(hwnd_tv, TEXT("全部"), parentItem, TVI_LAST, 1, 1, NULL);
+    childItem2 = insertTvItem(hwnd_tv, TEXT("第1组"), parentItem, TVI_LAST, 2, 2, NULL);
+    childItem3 = insertTvItem(hwnd_tv, TEXT("第2组"), parentItem, TVI_LAST, 3, 3, NULL);
 
     TreeView_Expand(hwnd_tv, parentItem, TVM_EXPAND);
 

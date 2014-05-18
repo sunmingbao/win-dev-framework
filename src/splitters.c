@@ -33,7 +33,7 @@ static inline void send_splitter_y(HWND  hwnd, int pos)
 }
 
 
-#define    MIN_SPLT_SPACE    (50)
+#define    MIN_SPLT_SPACE    (100)
 
 void WINAPI DrawXorBar(HDC hdc, int x1, int y1, int width, int height)
 {

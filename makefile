@@ -17,7 +17,9 @@ CFLAG := -Wall -O2  -DBUILD_TIME='"$(BUILD_TIME)"' -D_WIN32_IE=0x0501 -D_WIN32_W
 # 如果要编译_UNICODE版本，则放开下面的注释
 #CFLAG := $(CFLAG) -D_UNICODE
 
-LDFLAG := -mwindows  -s  -lkernel32 -luser32 -lgdi32 -lcomctl32 -lws2_32 
+LDFLAG := -mwindows  -s  -lkernel32 -luser32 -lgdi32 -lcomctl32 -lws2_32 -lMsimg32 
+
+CFLAG :=  $(CFLAG) -D_DEBUG 
 
 USE_AV=0
 USE_SPLITTER_FRAME=1

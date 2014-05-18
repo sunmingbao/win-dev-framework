@@ -11,13 +11,26 @@
 #ifdef _USE_SPLITTER_FRAME
 
 #include <windows.h>
+#include <WinGdi.h>
 #include "common.h"
 #include "global_symbols.h"
+#include "app_resource.h"
 #include "res.h"
 
 TCHAR szRightWinClassName[] = TEXT ("right_win") ;
 HWND    hwnd_right;
 
+void draw_img(HDC hdc, HBITMAP h_img_to_draw, int x, int y)
+{
+            BITMAP 			bitmap_info;
+            HDC hdcMem = CreateCompatibleDC(hdc);
+            HGDIOBJ oldBitmap = SelectObject(hdcMem, h_img_to_draw);
+            GetObject(h_img_to_draw, sizeof(bitmap_info), &bitmap_info);
+            BitBlt(hdc, x, y, bitmap_info.bmWidth, bitmap_info.bmHeight, hdcMem, 0, 0, SRCCOPY);
+            SelectObject(hdcMem, oldBitmap);
+            DeleteDC(hdcMem);
+
+}
 
 LRESULT CALLBACK right_WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -58,6 +71,8 @@ LRESULT CALLBACK right_WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM l
             fw_text_out_full(hdc
             , 100+3*cxchar, 200, 100, RGB(0xff,0xff,0xff), RGB(0x0,0x0,0x0)
             , TEXT("ÖÐÐË"), 4);
+
+            draw_img(hdc, h_img_job_finished, 50, 50);
                         
             EndPaint (hwnd, &ps) ;
             return 0 ;

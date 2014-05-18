@@ -141,6 +141,25 @@ int tcp_socket_init(const char *ipstr, uint16_t port)
     return socket_init(&sock_addr, SOCK_STREAM);
 }
 
+void set_socket_timeout(int sockfd, int snd_timeout_ms, int rcv_timeout_ms)
+{
+    DWORD   time_ms;
+
+    if (snd_timeout_ms!=-1)
+    {
+        time_ms = snd_timeout_ms;
+        setsockopt(sockfd, SOL_SOCKET, SO_SNDTIMEO, &time_ms, sizeof(time_ms));
+    }
+
+    if (rcv_timeout_ms!=-1)
+    {
+        time_ms = rcv_timeout_ms;
+        setsockopt(sockfd, SOL_SOCKET, SO_RCVTIMEO, &time_ms, sizeof(time_ms));
+    }
+
+}
+
+
 int fd_readable(int fd, int usec)
 {
     fd_set rfds;

@@ -128,7 +128,7 @@ void WriteInfo(TCHAR * szFormat, ...)
     int len1, len2;
     time_t log_time = time(NULL);
 
-    len1 = strftime(szBuffer,  sizeof(szBuffer), "[%Y%m%d %H:%M:%S]: ", localtime(&log_time));
+    len1 = strftime(szBuffer,  sizeof(szBuffer), "[%Y%m%d %H:%M:%S] ", localtime(&log_time));
 
 	va_start (pArgList, szFormat) ;
 

@@ -16,6 +16,7 @@
 #include <windowsx.h>
 
 extern HFONT h_font_32_px, h_font_resolve;
+extern HBITMAP  h_img_on_line, h_img_off_line, h_img_do_job, h_img_job_finished;
 
 void app_resource_init();
 #endif
